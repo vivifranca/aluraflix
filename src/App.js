@@ -16,12 +16,6 @@ function App() {
         videoDescription={"O que é Front-end?"}
        />
 
-      {
-        dadosIniciais.forEach(child => {
-        console.log(child);
-        })
-      }
-
       <Carousel
         ignoreFirstVideo
         category={dadosIniciais.categorias[0]}
