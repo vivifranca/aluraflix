@@ -80,7 +80,7 @@ function CreateCategory() {
           onChange={handleChange}
         />
 
-        <button>
+        <button type="submit">
           Create
         </button>
       </form>
