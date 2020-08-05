@@ -1,5 +1,5 @@
 import React from 'react';
 
-const Pagina404 = () => (<div>Página 404</div>)
+const Page = () => (<div>Page 404</div>);
 
-export default Pagina404;
+export default Page;
