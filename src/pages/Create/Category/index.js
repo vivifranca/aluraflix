@@ -37,7 +37,9 @@ function CreateCategory() {
   }
 
   useEffect(() => {
-    const URL = 'http://localhost:8080/categorias';
+    const URL = window.location.hostname.includes('localhost')
+      ? 'http://localhost:8080/categorias'
+      : 'https://viviflix.herokuapp.com/categorias';
     fetch(URL)
       .then(async (response) => {
         const parsedResponse = await response.json();
