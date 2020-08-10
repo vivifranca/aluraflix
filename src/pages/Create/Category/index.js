@@ -2,29 +2,20 @@ import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import PageDefault from '../../../components/PageDefault';
 import FormField from '../../../components/FormField';
+import useForm from '../../../hooks/useForm';
+import Button from '../../../components/Button';
+import BACKEND_URL from '../../../config';
 
 function CreateCategory() {
   const initialValues = {
     nome: '',
-    description: '',
-    color: '#000',
+    descricao: '',
+    cor: '#000',
   };
 
+  const { handleChange, values, clearForm } = useForm(initialValues);
+
   const [categories, setCategories] = useState([]);
-  const [values, setValues] = useState(initialValues);
-
-  function setValue(key, valor) {
-    // key: nome, description, bla, bli
-    setValues({
-      ...values,
-      [key]: valor, // nome: 'valor'
-    });
-  }
-
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setValue(name, value);
-  }
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -33,14 +24,11 @@ function CreateCategory() {
       values,
     ]);
 
-    setValues(initialValues);
+    clearForm();
   }
 
   useEffect(() => {
-    const URL = window.location.hostname.includes('localhost')
-      ? 'http://localhost:8080/categorias'
-      : 'https://viviflix.herokuapp.com/categorias';
-    fetch(URL)
+    fetch(`${BACKEND_URL}categorias`)
       .then(async (response) => {
         const parsedResponse = await response.json();
         setCategories([
@@ -60,30 +48,30 @@ function CreateCategory() {
         <FormField
           label="Category"
           type="text"
-          name="nome"
-          value={values.nome}
+          name="titulo"
+          value={values.titulo}
           onChange={handleChange}
         />
 
         <FormField
           label="Description"
           type="textarea"
-          name="description"
-          value={values.description}
+          name="descricao"
+          value={values.descricao}
           onChange={handleChange}
         />
 
         <FormField
           label="Color"
           type="color"
-          name="color"
-          value={values.color}
+          name="cor"
+          value={values.cor}
           onChange={handleChange}
         />
 
-        <button type="submit">
+        <Button type="submit">
           Create
-        </button>
+        </Button>
       </form>
 
       { categories.length === 0 && (
@@ -94,10 +82,8 @@ function CreateCategory() {
 
       <ul>
         {categories.map((category) => (
-          <li key={`${category.nome}`}>
-            {category.nome}
-            <br />
-            {category.descricao}
+          <li key={`${category.id}`}>
+            {category.titulo}
             <br />
             {category.cor}
             <br />

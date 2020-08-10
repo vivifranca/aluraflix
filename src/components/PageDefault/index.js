@@ -1,7 +1,8 @@
 import React from 'react';
+import styled, { css } from 'styled-components';
+import PropTypes from 'prop-types';
 import Menu from '../Menu';
 import Footer from '../Footer';
-import styled from 'styled-components';
 
 const Main = styled.main`
   background-color: var(--black);
@@ -10,18 +11,29 @@ const Main = styled.main`
   padding-top: 50px;
   padding-left: 5%;
   padding-right: 5%;
+  ${({ paddingAll }) => css`
+    padding: ${paddingAll};
+ `}
 `;
 
-function PageDefault({ children }) {
+function PageDefault({ children, paddingAll }) {
   return (
     <>
       <Menu />
-        <Main>
-          {children}
-        </Main>
+      <Main paddingAll={paddingAll}>
+        {children}
+      </Main>
       <Footer />
     </>
-  )
+  );
 }
+
+PageDefault.propTypes = {
+  // eslint-disable-next-line react/forbid-prop-types
+  children: PropTypes.array.isRequired,
+  paddingAll: PropTypes.number.isRequired,
+};
+
+PageDefault.defaultProps = {};
 
 export default PageDefault;
